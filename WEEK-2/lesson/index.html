@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dom Manipulation</title>
+  </head>
+  <style>
+    .container {
+      background-color: gray;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .names {
+      background-color: white;
+      width: 300px;
+      height: 100%;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="names">
+        <input type="text" id="newUserName" placeholder="Yeni kişi adı" />
+        <input type="text" id="newUserId" placeholder="Yeni kişi ID" />
+        <input type="text" id="newUserPosition" placeholder="Yeni kişi Position" />
+        <button onclick="javascript:addUser()">Yeni kişi ekle</button>
+        <ul id="user-list"></ul>
+      </div>
+      <div>
+        <ul id="owner-list">
+        </ul>
+      </div>
+      <div>
+        <ul id="stakeholders-list"></ul>
+      </div>
+    </div>
+
+    <script>
+      const state = {
+        userList: [],
+      };
+
+      function Li(list, subscriber) {
+        list.forEach(function (item) {
+          const newLi = document.createElement("li");
+          (newLi.innerText = item.name), newLi.setAttribute("data-id", item.id);
+          if (item.position === "manager") {
+            newLi.style = "font-weight:bold;";
+          }
+          subscriber.appendChild(newLi);
+        });
+      }
+
+      function A(list, subscriber) {
+        list.forEach(function (item) {
+          const newA = document.createElement("a");
+          (newA.innerText = item.name), newA.setAttribute("data-id", item.id);
+          newA.setAttribute("href", "https://www.google.com");
+          subscriber.appendChild(newA);
+        });
+      }
+
+      function renderUserList() {
+        const subscribers = [document.getElementById("user-list"), document.getElementById("owner-list"), document.getElementById("stakeholders-list")];
+        subscribers.forEach(function (subscriber) {
+          subscriber.innerHTML = "";
+          if (subscriber.getAttribute("id") === "user-list") {
+            Li(state.userList, subscriber);
+          } else {
+            A(state.userList, subscriber);
+          }
+        });
+      }
+      function setState(stateName, newValue) {
+        state[stateName] = newValue;
+        renderUserList();
+      }
+      function addUser() {
+        const userName = document.getElementById("newUserName").value;
+        const userId = document.getElementById("newUserId").value;
+        const userPosition = document.getElementById("newUserPosition").value;
+        setState("userList", [
+          ...state.userList,
+          {
+            name: userName,
+            id: userId,
+            position: userPosition,
+          },
+        ]);
+      }
+    </script>
+  </body>
+</html>
