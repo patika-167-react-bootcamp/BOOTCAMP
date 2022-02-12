@@ -23,9 +23,15 @@ const folders = [
 
 const getFile = function (id) {
   const returnObj = {}
-  returnObj.parent = folders.find((folder,index) => {
+  returnObj.parent = folders.find((folder) => {
     if (!folder.files) return false
-    const foundFile = folder.files.find((file) => file.id === id)
+    let index
+    const foundFile = folder.files.find((file,i) => {
+      if (file.id === id){
+        index = i
+        return true
+      }
+    })
     if (foundFile) {
       returnObj.file = foundFile
       returnObj.fileIndex = index
