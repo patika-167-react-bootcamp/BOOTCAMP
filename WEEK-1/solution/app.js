@@ -23,15 +23,15 @@ const folders = [
 
 const getFile = function (id) {
   const returnObj = {}
-  returnObj.parent = folders.find((folder) => {
+  returnObj.parent = folders.find((folder,index) => {
     if (!folder.files) return false
     const foundFile = folder.files.find((file) => file.id === id)
     if (foundFile) {
       returnObj.file = foundFile
+      returnObj.fileIndex = index
       return true
     }
-  })
-  returnObj.fileIndex = returnObj.parent.files.indexOf(returnObj.file)
+  }}
   if (!returnObj.file) throw "Source file not found"
   return returnObj
 }
@@ -51,14 +51,14 @@ const move = function (fileId, targetFolderId) {
   if (source.parent.id === targetFolderId) throw "File is already in target directory"
   source.parent.files.splice(source.fileIndex, 1)
   target.folder.files ||= []
-  target.folder.files.push(source.file)
+  target.folder.files.push({...source.file})
 }
 
 const copy = function (fileId, targetFolderId) {
   const source = getFile(fileId)
   const target = getFolder(targetFolderId)
   target.folder.files ||= []
-  target.folder.files.push(source.file)
+  target.folder.files.push({...source.file})
 }
 
 const remove = function (fileId) {
