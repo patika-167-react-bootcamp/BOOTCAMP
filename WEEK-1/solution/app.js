@@ -37,11 +37,17 @@ const getFile = function (id) {
 }
 
 const getFolder = function (id) {
-  const folder = folders.find((folder) => folder.id === id)
+  let index
+  const folder = folders.find((folder,i) => {
+    if (folder.id === id){
+      index = i
+      return true
+    }
+  })
   if (!folder) throw "Folder not found"
   return {
     folder: folder,
-    folderIndex: folders.indexOf(folder),
+    folderIndex: index,
   }
 }
 
