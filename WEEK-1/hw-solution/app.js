@@ -31,7 +31,7 @@ const getFile = function (id) {
       returnObj.fileIndex = index
       return true
     }
-  }}
+  })
   if (!returnObj.file) throw "Source file not found"
   return returnObj
 }
