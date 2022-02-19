@@ -1,0 +1,23 @@
+body {
+  background: silver;
+}
+
+.App {
+  margin: auto;
+  width: 900px;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid gray;
+  height: 90vh;
+}
+#user-list {
+  width: 200px;
+}
+
+.success {
+  color: green;
+}
+.warning {
+  color: orange;
+}
+
